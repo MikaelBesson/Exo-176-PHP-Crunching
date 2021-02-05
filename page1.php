@@ -42,21 +42,27 @@ echo "<br>";
 
 //Quel est le film le plus récent ? Le plus vieux ?
 echo "Quel est le film le plus récent ? Le plus vieux ?<br><br>";
-
+$sorties =[];
 $sortieFilm =[];
 foreach($top as $films){
-    $sortie =  $films["im:releaseDate"]["attributes"]["label"];
-    $sortieFilm[] = $sortie;
+    $sortie = explode(" ",$films["im:releaseDate"]["attributes"]["label"]);
+    $sortieFilm[] = intval($sortie[2]);
+    $sorties[] = $films["im:releaseDate"]["attributes"]["label"];
 }
-echo max($sortieFilm).$top["im:name"]["label"];
-
-
-
-
+foreach ($top as $films){
+    if(max($sorties) === $films["im:releaseDate"]["attributes"]["label"]){
+        echo "le film le plus recent est sortie le : ".max($sortieFilm)." ".$films["im:name"]["label"]."<br>";
+    }
+    if(min($sorties) === $films["im:releaseDate"]["attributes"]["label"]){
+        echo "le film le plus vieux est sortie le : ".min($sortieFilm)." ".$films["im:name"]["label"]."<br>";
+    }
+}
 echo "<br>";
 
 //Quelle est la catégorie de films la plus représentée ?
 echo "Quelle est la catégorie de films la plus représentée ?<br><br>";
+
+
 echo "<br>";
 
 //Quel est le réalisateur le plus présent dans le top100 ?
